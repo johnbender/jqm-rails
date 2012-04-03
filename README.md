@@ -12,6 +12,8 @@ There are two ways to set up this application for development. The easiest is wi
     cd /vagrant
     rails server
 
+At which point your app can be viewed at http://33.33.33.10:3000 from the host machine or on the network at http://$NETWORK_IP:4567.
+
 The second is to setup all the rails dependencies locally. If you happen to be running linux you can use the `script/provision.sh` file to install the package dependencies (_except_ ruby) including node.
 
     cd $PROJECT_DIR
