@@ -20,3 +20,7 @@ The second is to setup all the rails dependencies locally. If you happen to be r
     bash script/provision.sh
 
 On other operating systems the development dependencies are left to the reader.
+
+## Notes
+
+The model and controler for the user authentication is borrowed from the show notes/code sample of (Railscast 270)[https://github.com/railscasts/episode-270/tree/master/auth-after] for the sake of saving time. Thanks Ryan!
