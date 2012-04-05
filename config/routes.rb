@@ -1,5 +1,5 @@
 RailsJqm::Application.routes.draw do
-  root :to => "sessions#new"
+  root :to => "users#index"
   resources :users
   resources :sessions
   # The priority is based upon order of creation:

@@ -2,10 +2,16 @@
   All users
 <% end %>
 
-<ul data-role="listview">
+<ul data-role="listview" data-filter="true">
+  <% prev_user = nil %>
   <% @users.each do |user| %>
+    <% if !prev_user || user.status != prev_user.status %>
+      <li data-role="list-divider">Status: <%= user.status %></li>
+    <% end %>
+
     <li>
       <%= link_to user.email, user_path(user) %>
     </li>
+    <% prev_user = user %>
   <% end %>
 </ul>
