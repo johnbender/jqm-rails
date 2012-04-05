@@ -14,7 +14,7 @@
   <% end %>
 <% end %>
 
-<%= form_for @user, :html => { "data-ajax" => false } do |f| %>
+<%= form_for @user, :url => differentiate_path do |f| %>
   <fieldset>
     <div data-role="fieldcontain">
       <%= f.label :email %>
