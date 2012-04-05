@@ -2,15 +2,13 @@
   Create an account
 <% end %>
 
-<% content_for :message do %>
+<% content_for :error do %>
   <% if @user.errors.any? %>
-    <div class="messages error">
       <ul>
         <% for message in @user.errors.full_messages %>
           <li><%= message %></li>
         <% end %>
       </ul>
-    </div>
   <% end %>
 <% end %>
 

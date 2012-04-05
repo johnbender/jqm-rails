@@ -23,4 +23,4 @@ On other operating systems the development dependencies are left to the reader.
 
 ## Notes
 
-The model and controler for the user authentication is borrowed from the show notes/code sample of (Railscast 270)[https://github.com/railscasts/episode-270/tree/master/auth-after] for the sake of saving time. Thanks Ryan!
+The model and controllers for the user authentication are borrowed from the show notes/code samples of (Railscast 270)[https://github.com/railscasts/episode-270/tree/master/auth-after] for the sake of time savings. Thanks Ryan!

@@ -12,11 +12,34 @@
 <body>
   <div data-role="page" data-dom-cache="true">
     <div data-role="header">
+      <% if current_user %>
+        <%= link_to "log out", session_path(current_user), :method => :delete, "data-icon" => "delete", :class => "ui-btn-right" %>
+      <% end %>
       <h1><%= yield :heading %></h1>
     </div>
 
-    <%= yield :message %>
-    <%= yield %>
+    <div id="messages">
+      <div id="alert">
+        <% if flash[:alert] %>
+          <ul>
+            <li><%= flash[:alert] %></li>
+          </ul>
+        <% else %>
+          <%= yield :error %>
+        <% end %>
+      </div>
+      <div id="notice">
+        <% if flash[:notice] %>
+          <ul>
+            <li><%= flash[:notice] %></li>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+
+    <div data-role="content">
+      <%= yield %>
+    </div>
   </div>
 </body>
 </html>

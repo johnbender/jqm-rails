@@ -1,0 +1,17 @@
+<% content_for :heading do %>
+  Log in
+<% end %>
+
+<%= form_tag(sessions_path) do %>
+  <fieldset>
+    <div data-role="fieldcontain">
+      <%= label_tag :email %>
+      <%= text_field_tag :email, nil, :placeholder => "john.doe@example.com" %>
+    </div>
+    <div data-role="fieldcontain">
+      <%= label_tag :password %>
+      <%= password_field_tag :password %>
+    </div>
+    <%= submit_tag "Log in" %>
+  </fieldset>
+<% end %>

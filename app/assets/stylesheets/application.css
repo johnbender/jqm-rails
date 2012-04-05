@@ -20,32 +20,27 @@
   box-shadow: 0px 0px 4px #F41;
 }
 
-.messages {
+#messages div {
   color: white;
   box-shadow: inset 0px 0px 4px black;
-  padding: 10px 20px;
 }
 
-.messages ul {
-  padding: 0px;
-  margin: 8px 0;
+#messages ul {
+  padding: 15px;
+  margin: 0px;
 }
 
-.messages li {
+#messages li {
   padding: 3px 0;
   list-style: none;
 }
 
-.messages.error {
+#alert {
   background-color: #F41;
 }
 
-.messages.alert {
+#notice {
   background-color: #4B4;
-}
-
-.ui-mobile fieldset {
-  margin: 0 20px;
 }
 
 input.ui-input-text {
