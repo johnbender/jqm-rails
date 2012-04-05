@@ -2,13 +2,21 @@
 <html>
 <head>
   <title>RailsJqm</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= stylesheet_link_tag "http://code.jquery.com/mobile/latest/jquery.mobile.min.css", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "http://code.jquery.com/mobile/latest/jquery.mobile.min.js" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div data-role="page">
+    <div data-role="header">
+      <h1><%= yield :heading %></h1>
+    </div>
 
-<%= yield %>
-
+    <%= yield :message %>
+    <%= yield %>
+  </div>
 </body>
 </html>

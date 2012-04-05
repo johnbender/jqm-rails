@@ -1,9 +1,10 @@
-<h1>Create an account</h1>
+<% content_for :heading do %>
+  Create an account
+<% end %>
 
-<%= form_for @user do |f| %>
+<% content_for :message do %>
   <% if @user.errors.any? %>
-    <div class="error_messages">
-      <h2>Form is invalid</h2>
+    <div class="messages error">
       <ul>
         <% for message in @user.errors.full_messages %>
           <li><%= message %></li>
@@ -11,16 +12,22 @@
       </ul>
     </div>
   <% end %>
+<% end %>
 
+<%= form_for @user, :html => { "data-ajax" => false } do |f| %>
   <fieldset>
     <div data-role="fieldcontain">
       <%= f.label :email %>
-      <%= f.text_field :email %>
+      <%= f.text_field :email, :placeholder => "john.doe@example.com" %>
+    </div>
+    <div data-role="fieldcontain">
       <%= f.label :password %>
       <%= f.password_field :password %>
+    </div>
+    <div data-role="fieldcontain">
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation %>
-      <%= f.submit %>
     </div>
+    <%= f.submit %>
   </fieldset>
 <% end %>

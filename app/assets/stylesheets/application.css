@@ -11,3 +11,44 @@
  *= require_self
  *= require_tree .
 */
+
+.field_with_errors {
+  display: inline;
+}
+
+.fielf_with_errors input {
+  box-shadow: 0px 0px 4px #F41;
+}
+
+.messages {
+  color: white;
+  box-shadow: inset 0px 0px 4px black;
+  padding: 10px 20px;
+}
+
+.messages ul {
+  padding: 0px;
+  margin: 8px 0;
+}
+
+.messages li {
+  padding: 3px 0;
+  list-style: none;
+}
+
+.messages.error {
+  background-color: #F41;
+}
+
+.messages.alert {
+  background-color: #4B4;
+}
+
+.ui-mobile fieldset {
+  margin: 0 20px;
+}
+
+input.ui-input-text {
+  background-color: white;
+}
+
