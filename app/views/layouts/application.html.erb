@@ -12,9 +12,14 @@
 <body>
   <div data-role="page" data-dom-cache="true">
     <div data-role="header">
+      <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
       <% if current_user %>
-        <%= link_to "log out", session_path(current_user), :method => :delete, "data-icon" => "delete", :class => "ui-btn-right" %>
+        <%= link_button_to "log out", session_path(current_user), :method => :delete %>
+      <% else %>
+        <%= link_button_to "log in", new_session_path %>
+        <%= link_button_to "sign up", new_user_path %>
       <% end %>
+      </div>
       <h1><%= yield :heading %></h1>
     </div>
 

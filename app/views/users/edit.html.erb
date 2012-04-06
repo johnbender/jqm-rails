@@ -1,0 +1,35 @@
+<% content_for :heading do %>
+  <% if current_user.id = @user.id %>
+    Change your info
+  <% else %>
+    User info
+  <% end %>
+<% end %>
+
+<% content_for :error do %>
+  <% if @user.errors.any? %>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+  <% end %>
+<% end %>
+
+<%= form_for @user, :url => differentiate_path(:user_path, @user), :method => :put do |f| %>
+  <fieldset>
+    <div data-role="fieldcontain">
+      <%= f.label :email %>
+      <%= f.text_field :email, :placeholder => "john.doe@example.com" %>
+    </div>
+    <div data-role="fieldcontain">
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </div>
+    <div data-role="fieldcontain">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %>
+    </div>
+    <%= f.submit %>
+  </fieldset>
+<% end %>

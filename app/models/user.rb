@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # TODO app config
   STATUSES = ["out", "in", "vacation"]
 
-  attr_accessible :email, :password, :password_confirmation
+  attr_accessible :email, :password, :password_confirmation, :status
   has_secure_password
   before_create :init_status
   validates_presence_of :password, :on => :create

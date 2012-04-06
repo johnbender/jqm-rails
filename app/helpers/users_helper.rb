@@ -1,9 +1,12 @@
 module UsersHelper
-  def differentiate_path
+  # NOTE severly pushing the "clever" envelope here
+  def differentiate_path( path = :users_path, *args )
     attempt = request.parameters["attempt"]
-    users_path(:attempt => attempt ? attempt.to_i + 1 : 1)
+    args.unshift(path).push(:attempt => attempt ? attempt.to_i + 1 : 1)
+    send(*args)
   end
 
+  # TODO move into application settings
   def status_icon_map
     { "out" => "delete",
       "in" => "check",

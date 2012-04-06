@@ -10,7 +10,7 @@
     <% end %>
 
     <li>
-      <%= link_to user.email, user_path(user) %>
+      <%= link_to user.email, current_user == user ? edit_user_path(user) : user_path(user) %>
     </li>
     <% prev_user = user %>
   <% end %>
