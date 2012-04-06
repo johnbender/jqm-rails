@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   # TODO app config
-  STATUSES = ["out", "in", "vacation"]
+  STATUSES = ["Out", "In", "Vacation"]
 
   attr_accessible :email, :password, :password_confirmation, :status
   has_secure_password

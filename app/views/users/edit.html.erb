@@ -30,6 +30,10 @@
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation %>
     </div>
+    <div data-role="fieldcontain">
+      <%= f.label :status %>
+      <%= f.select :status, User::STATUSES, {}, "data-native-menu" => :false %>
+    </div>
     <%= f.submit %>
   </fieldset>
 <% end %>
