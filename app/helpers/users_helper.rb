@@ -1,6 +1,6 @@
 module UsersHelper
   # NOTE severly pushing the "clever" envelope here
-  def differentiate_path( path = :users_path, *args )
+  def differentiate_path(path = :users_path, *args)
     attempt = request.parameters["attempt"]
     args.unshift(path).push(:attempt => attempt ? attempt.to_i + 1 : 1)
     send(*args)
