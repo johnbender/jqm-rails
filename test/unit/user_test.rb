@@ -7,6 +7,6 @@ class UserTest < ActiveSupport::TestCase
              :password => "foo",
              :password_confirmation => "foo").save!
 
-    assert_equal(User.find_by_email(email).status, "out")
+    assert_equal(User.find_by_email(email).status, User::STATUSES.first)
   end
 end

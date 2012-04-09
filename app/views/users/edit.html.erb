@@ -32,7 +32,7 @@
     </div>
     <div data-role="fieldcontain">
       <%= f.label :status %>
-      <%= f.select :status, User::STATUSES, {}, "data-native-menu" => :false %>
+      <%= f.select :status, User::STATUSES.map { |s| s.capitalize }, {}, "data-native-menu" => :false %>
     </div>
     <%= f.submit %>
   </fieldset>

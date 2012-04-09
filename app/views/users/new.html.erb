@@ -12,7 +12,7 @@
   <% end %>
 <% end %>
 
-<%= form_for @user, :url => differentiate_path do |f| %>
+<%= form_for @user, :url => differentiate_path(:users_path) do |f| %>
   <fieldset>
     <div data-role="fieldcontain">
       <%= f.label :email %>
