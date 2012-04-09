@@ -13,6 +13,7 @@
 <body>
   <div data-role="page" data-dom-cache="true">
     <div data-role="header">
+      <h1><%= yield :heading %></h1>
       <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
       <% if current_user %>
         <%= link_button_to "log out", session_path(current_user), :method => :delete %>
@@ -21,7 +22,6 @@
         <%= link_button_to "sign up", new_user_path %>
       <% end %>
       </div>
-      <h1><%= yield :heading %></h1>
     </div>
 
     <div id="messages">
