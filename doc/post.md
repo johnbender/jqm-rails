@@ -43,3 +43,4 @@ possibly addressing this in a later release https://github.com/jquery/jquery-mob
 
 ## Debugging
 
+snippet to show rails exception output on page load failed

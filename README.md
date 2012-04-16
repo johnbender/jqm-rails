@@ -4,7 +4,7 @@ This is a simple office presence application that allows users to notify office 
 
 ## Setup
 
-There are two ways to set up this application for development. The easiest is with (Vagrant)[http://vagrantup.com] if you already have it installed.
+There are two ways to set up this application for development. The easiest is with [Vagrant](http://vagrantup.com) if you already have it installed.
 
     git clone github.com/repo/url.git
     vagrant up
@@ -23,4 +23,4 @@ On other operating systems the development dependencies are left to the reader.
 
 ## Notes
 
-The model and controllers for the user authentication are borrowed from the show notes/code samples of (Railscast 270)[https://github.com/railscasts/episode-270/tree/master/auth-after] for the sake of time savings. Thanks Ryan!
+The model and controllers for the user authentication are borrowed from the show notes/code samples of [Railscast 270](https://github.com/railscasts/episode-270/tree/master/auth-after) for the sake of time savings. Thanks Ryan!
