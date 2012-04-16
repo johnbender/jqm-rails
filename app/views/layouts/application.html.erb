@@ -14,14 +14,6 @@
   <div data-role="page" data-dom-cache="true">
     <div data-role="header">
       <h1><%= yield :heading %></h1>
-      <div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
-      <% if current_user %>
-        <%= link_button_to "log out", session_path(current_user), :method => :delete %>
-      <% else %>
-        <%= link_button_to "log in", new_session_path %>
-        <%= link_button_to "sign up", new_user_path %>
-      <% end %>
-      </div>
     </div>
 
     <div id="messages">
@@ -46,6 +38,26 @@
     <div data-role="content">
       <%= yield %>
     </div>
+
+		<div data-role="navbar" data-position="fixed">
+			<ul>
+        <% if current_user %>
+				<li>
+          <a href="/users" data-icon="grid">users</a>
+        </li>
+        <li>
+          <%= link_to "log out", session_path(current_user), :method => :delete, "data-icon" => "back" %>
+        </li>
+        <% else %>
+        <li>
+          <%= link_to "log in", new_session_path, "data-icon" => "check" %>
+        </li>
+        <li>
+          <%= link_to "sign up", new_user_path, "data-icon" => "plus"%>
+        </li>
+        <% end %>
+			</ul>
+		</div>
   </div>
 </body>
 </html>
