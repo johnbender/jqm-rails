@@ -24,9 +24,11 @@ class UsersController < ApplicationController
   end
 
   def update
-    if current_user.email = params[:email]
-      current_user.update_attributes(params)
+    if current_user.email = params[:user][:email]
+      current_user.update_attributes!(params[:user])
     end
+
+    redirect_to users_path
   end
 
   def edit

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RailsJqm</title>
+  <title>Jqm and Rails</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag "http://code.jquery.com/mobile/latest/jquery.mobile.min.css", :media => "all" %>
   <%= stylesheet_link_tag "application", :media => "all" %>
@@ -49,6 +49,9 @@
           <%= link_to "log out", session_path(current_user), :method => :delete, "data-icon" => "back" %>
         </li>
         <% else %>
+        <li>
+          <a href="#" data-rel="back" data-icon="back">back</a>
+        </li>
         <li>
           <%= link_to "log in", new_session_path, "data-icon" => "check" %>
         </li>
