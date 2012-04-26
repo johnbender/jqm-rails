@@ -96,7 +96,58 @@ And using it in a view would take the form (`app/views/shared/sample.html.erb`):
 <% end %>
 ```
 
-This has the advantage of pushing the control down into the views a bit more and making the page configuration requirements more explicit by requiring the user provide the `:locals` values. As we'll see when we cover form validation being able to tightly control the configuration of the page elements with data attribute values is important.
+This has the advantage of pushing the control down into the views a bit more and making the page configuration requirements more explicit by requiring the user provide the `:locals` values. As we'll see, being able to tightly control the configuration of the page elements with data attribute values is important.
+
+## Form Validation
+
+jQuery Mobile's support for caching multiple pages in an html document can cause issues for Rails form validation and really any sequence of actions that can navigate to the same url many times in a row. By default the pages that exist in the html document will be removed when navigating away from them but in general the framework trys to source content and views locally where possible. A simple example will illustrate:
+
+```html
+<div data-role="page" data-url="/foos">
+  <div data-role="content">
+    <a href="/bars">Go to Bars</a>
+    All the Foos
+  </div>
+</div>
+
+<div data-role="page" data-url="/bars">
+  <div data-role="content">
+    <a href="/bars">Go to Bars</a>
+    All the Bars
+  </div>
+</div>
+```
+
+Assuming the first page is the current active page and DOM caching is turned on, clicking on the `/bars` link will navigate to the page that already exists in the DOM from that url (the `data-url` is added by the framework to identify where content came from). As a consequence when clicking the `/bars` link on the `/bars` page it's effectively a no-op. This is important in rails because invalid form submissions render the `new` view consistently under the index path (`app/controllers/users_controller.rb`).
+
+```ruby
+def create
+  @user = User.new(params[:user])
+
+  if @user.save
+    redirect_to root_url
+  else
+    # /users == /users/new
+    render :new
+  end
+end
+```
+
+On validation failure the content of `/users` is effitively identical to `/users/new` save for the possible addition of the error message markup. The problem is that the page content for `/users` also has a form that submits to `/users` as its action which is the aformentioned noop. The quick and dirty solution to this problem is to differentiate the action path with a url parameter.
+
+```ruby
+# NOTE severly pushing the "clever" envelope here
+def differentiate_path(path, *args)
+  attempt = request.parameters["attempt"].to_i + 1
+  args.unshift(path).push(:attempt => attempt)
+  send(*args)
+end
+```
+
+history issues
+path differentiation
+data-dom-cache
+possibly addressing this in a later release https://github.com/jquery/jquery-mobile/issues/3227
 
 ## Data Attributes
 
@@ -126,15 +177,6 @@ The `mobileinit` event fires before jQuery Mobile has enhanced the DOM and is ge
 ```
 
 If you are beginning a new application and you plan to use a couple libraries that rely on data attributes it might be better to start out with a namespace since changing it after the fact can be time intensive and/or error prone.
-
-## Form Validation
-
-
-
-history issues
-path differentiation
-data-dom-cache
-possibly addressing this in a later release https://github.com/jquery/jquery-mobile/issues/3227
 
 ## Debugging
 
