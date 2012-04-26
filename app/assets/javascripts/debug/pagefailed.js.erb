@@ -1,3 +1,4 @@
+<% if Rails.env.development? %>
 function onLoadFailed( event, data ) {
   var text = data.xhr.responseText,
     newHtml = text.split( /<\/?html[^>]*>/gmi )[1];
@@ -5,3 +6,4 @@ function onLoadFailed( event, data ) {
 }
 
 $( document ).on( "pageloadfailed", onLoadFailed);
+<% end %>

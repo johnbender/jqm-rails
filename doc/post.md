@@ -135,7 +135,7 @@ end
 
 On validation failure the content of `/users` is effitively identical to `/users/new` save for the possible addition of the error message markup. The problem is that the page content for `/users` also has a form that submits to `/users` as its action which is the aformentioned noop.
 
-The solution we normally recommend is to add `data-ajax=false` on the form so which will prevent the framework from hijacking the submit. Unfortunately that also means no animation/transition. One quick way to get around the problem and retain the nice transitions is to differentiate the action path with a url parameter.
+The solution we normally recommend is to add `data-ajax=false` on the form so which will prevent the framework from hijacking the submit. Unfortunately that also means no animation/transition. One quick way to get around the problem and retain the nice transitions is to differentiate the action path with a url parameter (`app/helpers/application_helper.rb`).
 
 ```ruby
 # NOTE severly pushing the "clever" envelope here
@@ -156,11 +156,11 @@ As noted this is probably a bit too clever (pejorative form), but it handles dif
 :url => differentiate_path(:user_path, @user)
 ```
 
-For each new submission it will increment the parameter value and signal to jQuery Mobile that the path and the content are different. In addition you will want to annotate your form with `data-dom-cache=true` so that it preserves the previous form submission page contents for a sane back button experience. Otherwise jQuery Mobile will reap the previous form validation failure pages from the DOM and try to reload the requested url in the history stack. If that happens to be `/users?attempt=3` the content won't be the submission form but rather a list of the users or something else. By preserving the pages the back button will simply let them traverse backwards through their submission failures.
+For each new submission it will increment the parameter value and signal to jQuery Mobile that the path and the content are different. In addition you will want to annotate your form with `data-dom-cache=true` so that it preserves the previous form submission page contents for a sane back button experience. Otherwise jQuery Mobile will reap the previous form validation failure pages from the DOM and try to reload the requested url in the history stack. If that happens to be `/users?attempt=3` the content won't be the submission form but rather a list of the users or something else if that url requires validation. By preserving the pages the back button will simply let them traverse backwards through their submission failures.
 
 ## Data Attributes
 
-jQuery Mobile makes heavy use of data attributes for annotating DOM elements and configuing how the library will opperate. As the use of data attributes becomes more and more common we decided, during the beta, that a namepsacing option would have a lot of value. Rails also makes fairly heavy use of data attributes for its unobtrusive javascript helpers though it doesn't appear from a simple `grep data- jquery_ujs.js` that there are any conflicts. If that changes you can alter jQuery Mobiles data attribute namespace with a simple addition `app/assets/javascripts/application.html.erb`:
+jQuery Mobile makes heavy use of data attributes for annotating DOM elements and configuing how the library will opperate. During beta we came to the consesus that data attribute use was becoming more and more common and decided that a namepsacing option would have a lot of value. Rails also makes fairly heavy use of data attributes for its unobtrusive javascript helpers though it doesn't appear from a simple `grep data- jquery_ujs.js` that there are any conflicts. If that changes you can alter jQuery Mobiles data attribute namespace with a simple addition `app/assets/javascripts/application.html.erb`:
 
 ```javascript
 //= require jquery
@@ -189,7 +189,19 @@ If you are beginning a new application and you plan to use a couple libraries th
 
 ## Debugging
 
-snippet to show rails exception output on page load failed
+Tooling for mobile web development is still evolving and though Weinre and Adobe Shadow present interseting opportunities to debug CSS, markup, and JavaScript we still get server side errors. jQuery Mobile, being unaware of the environment in which it's working must report a server error in a user friendly fashion. As a result it swallows the Rails stack traces we've come to know and love and just displays an error alert. By binding the special `pageloadfailed` event we replace the DOM content with the stack trace when one occurs (`app/assets/javascripts/debug/pagefailed.js.erb`)
+
+```javascript
+function onLoadFailed( event, data ) {
+  var text = data.xhr.responseText,
+      newHtml = text.split( /<\/?html[^>]*>/gmi )[1];
+  $( "html" ).html( newHtml );
+}
+
+$( document ).on( "pageloadfailed", onLoadFailed);
+```
+
+To make sure that it only loads in development we can wrap that in a `<%= if Rails.env.development? %>` block and the asset pipline will render the `erb` without the snippet in production/test.
 
 
 ## footnotes
