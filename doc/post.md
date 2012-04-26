@@ -133,7 +133,9 @@ def create
 end
 ```
 
-On validation failure the content of `/users` is effitively identical to `/users/new` save for the possible addition of the error message markup. The problem is that the page content for `/users` also has a form that submits to `/users` as its action which is the aformentioned noop. The quick and dirty solution to this problem is to differentiate the action path with a url parameter.
+On validation failure the content of `/users` is effitively identical to `/users/new` save for the possible addition of the error message markup. The problem is that the page content for `/users` also has a form that submits to `/users` as its action which is the aformentioned noop.
+
+The solution we normally recommend is to add `data-ajax=false` on the form so which will prevent the framework from hijacking the submit. Unfortunately that also means no animation/transition. One quick way to get around the problem and retain the nice transitions is to differentiate the action path with a url parameter.
 
 ```ruby
 # NOTE severly pushing the "clever" envelope here
@@ -144,10 +146,17 @@ def differentiate_path(path, *args)
 end
 ```
 
-history issues
-path differentiation
-data-dom-cache
-possibly addressing this in a later release https://github.com/jquery/jquery-mobile/issues/3227
+As noted this is probably a bit too clever (pejorative form), but it handles differentiating parameterized or unparamerterized rails path and url helpers by adding an attempt query parameter. In use as the `:url` hash parameter to the `form_for` and `form_tag` helpers
+
+```ruby
+# new form
+:url => differentiate_path(:users_path)
+
+# edit form
+:url => differentiate_path(:user_path, @user)
+```
+
+For each new submission it will increment the parameter value and signal to jQuery Mobile that the path and the content are different. In addition you will want to annotate your form with `data-dom-cache=true` so that it preserves the previous form submission page contents for a sane back button experience. Otherwise jQuery Mobile will reap the previous form validation failure pages from the DOM and try to reload the requested url in the history stack. If that happens to be `/users?attempt=3` the content won't be the submission form but rather a list of the users or something else. By preserving the pages the back button will simply let them traverse backwards through their submission failures.
 
 ## Data Attributes
 
