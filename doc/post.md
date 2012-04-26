@@ -35,7 +35,7 @@ since the jQuery JavaScript is rolled into the application include through the a
 //= require jquery
 ```
 
-At the time of this writing there is one issue with jQuery Mobile 1.1 and jQuery Core 1.7.2 and newly generated Rails `Gemfile` doesn't have a constraint on the jquery-rails gem version. So in your `Gemfile` it's a good idea to use `gem 'jquery-rails', '=2.0.1'`, which carries Core version 1.7.1 and is compatible with Mobile 1.1. After that the only thing left is to decide what you want to do with your viewport meta tag. The discusion about device scale and width is a long and complex one. The [quirksmode article](http://www.quirksmode.org/blog/archives/2010/04/a_pixel_is_not.html) is a good place to start, but the recommended `content` value for jQuery Mobile applications is:
+At the time of this writing there is one issue with jQuery Mobile 1.1 and jQuery Core 1.7.2 and newly generated Rails `Gemfile` doesn't have a constraint on the jquery-rails gem version. So in your `Gemfile` it's a good idea to use `gem 'jquery-rails', '=2.0.1'`, which carries Core version 1.7.1 and is compatible with Mobile 1.1. After that the only thing left is to decide what you want to do with your viewport meta tag. The discussion about device scale and width is a long and complex one. The [quirksmode article](http://www.quirksmode.org/blog/archives/2010/04/a_pixel_is_not.html) is a good place to start, but the recommended `content` value for jQuery Mobile applications is:
 
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -100,7 +100,7 @@ This has the advantage of pushing the control down into the views a bit more and
 
 ## Form Validation
 
-jQuery Mobile's support for caching multiple pages in an html document can cause issues for Rails form validation and really any sequence of actions that can navigate to the same url many times in a row. By default the pages that exist in the html document will be removed when navigating away from them but in general the framework trys to source content and views locally where possible. A simple example will illustrate:
+jQuery Mobile's support for caching multiple pages in an html document can cause issues for Rails form validation and really any sequence of actions that can navigate to the same URL many times in a row. By default the pages that exist in the html document will be removed when navigating away from them but in general the framework tries to source content and views locally where possible. A simple example will illustrate:
 
 ```html
 <div data-role="page" data-url="/foos">
@@ -133,12 +133,12 @@ def create
 end
 ```
 
-On validation failure the content of `/users` is effitively identical to `/users/new` save for the possible addition of the error message markup. The problem is that the page content for `/users` also has a form that submits to `/users` as its action which is the aformentioned noop.
+On validation failure the content of `/users` is effectively identical to `/users/new` save for the possible addition of the error message markup. The problem is that the page content for `/users` also has a form that submits to `/users` as its action which is the aforementioned noop.
 
 The solution we normally recommend is to add `data-ajax=false` on the form so which will prevent the framework from hijacking the submit. Unfortunately that also means no animation/transition. One quick way to get around the problem and retain the nice transitions is to differentiate the action path with a url parameter (`app/helpers/application_helper.rb`).
 
 ```ruby
-# NOTE severly pushing the "clever" envelope here
+# NOTE severely pushing the "clever" envelope here
 def differentiate_path(path, *args)
   attempt = request.parameters["attempt"].to_i + 1
   args.unshift(path).push(:attempt => attempt)
@@ -146,7 +146,7 @@ def differentiate_path(path, *args)
 end
 ```
 
-As noted this is probably a bit too clever (pejorative form), but it handles differentiating parameterized or unparamerterized rails path and url helpers by adding an attempt query parameter. In use as the `:url` hash parameter to the `form_for` and `form_tag` helpers
+As noted this is probably a bit too clever (pejorative form), but it handles differentiating parametrized or unparametrized rails path and url helpers by adding an attempt query parameter. In use as the `:url` hash parameter to the `form_for` and `form_tag` helpers
 
 ```ruby
 # new form
@@ -160,7 +160,7 @@ For each new submission it will increment the parameter value and signal to jQue
 
 ## Data Attributes
 
-jQuery Mobile makes heavy use of data attributes for annotating DOM elements and configuing how the library will opperate. During beta we came to the consesus that data attribute use was becoming more and more common and decided that a namepsacing option would have a lot of value. Rails also makes fairly heavy use of data attributes for its unobtrusive javascript helpers though it doesn't appear from a simple `grep data- jquery_ujs.js` that there are any conflicts. If that changes you can alter jQuery Mobiles data attribute namespace with a simple addition `app/assets/javascripts/application.html.erb`:
+jQuery Mobile makes heavy use of data attributes for annotating DOM elements and configuring how the library will operate. During beta we came to the consensus that data attribute use was becoming more and more common and decided that a namespacing option would have a lot of value. Rails also makes fairly heavy use of data attributes for its unobtrusive javascript helpers though it doesn't appear from a simple `grep data- jquery_ujs.js` that there are any conflicts. If that changes you can alter jQuery Mobiles data attribute namespace with a simple addition `app/assets/javascripts/application.html.erb`:
 
 ```javascript
 //= require jquery
@@ -189,7 +189,7 @@ If you are beginning a new application and you plan to use a couple libraries th
 
 ## Debugging
 
-Tooling for mobile web development is still evolving and though Weinre and Adobe Shadow present interseting opportunities to debug CSS, markup, and JavaScript we still get server side errors. jQuery Mobile, being unaware of the environment in which it's working must report a server error in a user friendly fashion. As a result it swallows the Rails stack traces we've come to know and love and just displays an error alert. By binding the special `pageloadfailed` event we replace the DOM content with the stack trace when one occurs (`app/assets/javascripts/debug/pagefailed.js.erb`)
+Tooling for mobile web development is still evolving and though Weinre and Adobe Shadow present intersecting opportunities to debug CSS, markup, and JavaScript we still get server side errors. jQuery Mobile, being unaware of the environment in which it's working must report a server error in a user friendly fashion. As a result it swallows the Rails stack traces we've come to know and love and just displays an error alert. By binding the special `pageloadfailed` event we replace the DOM content with the stack trace when one occurs (`app/assets/javascripts/debug/pagefailed.js.erb`)
 
 ```javascript
 function onLoadFailed( event, data ) {
@@ -201,8 +201,7 @@ function onLoadFailed( event, data ) {
 $( document ).on( "pageloadfailed", onLoadFailed);
 ```
 
-To make sure that it only loads in development we can wrap that in a `<%= if Rails.env.development? %>` block and the asset pipline will render the `erb` without the snippet in production/test.
-
+To make sure that it only loads in development we can wrap that in a `<%= if Rails.env.development? %>` block and the asset pipeline will render the `erb` without the snippet in production/test.
 
 ## footnotes
 
