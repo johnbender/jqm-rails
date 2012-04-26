@@ -6,13 +6,11 @@ jQuery Mobile provides a quick start toward a mobile friendly application with s
 
 This post assumes that you have some basic knowledge of how jQuery Mobile works including an understanding of what `data-*` attributes are and how they are used to create jQuery Mobile pages, headers and content blocks. For a quick introduction to the basics there's a great article by Shaun Dunne at [ubelly.com](http://www.ubelly.com/2012/02/jquery-mobile-101/) that covers everything necessary for this article.
 
-## Sample Application
-
-All the examples and advice in this post are derived from the construction of a [sample application](https://github.com/johnbender/jqm-rails) that tracks the presence of employees in an office. It's obviously a simple application and complexity often shines a light in the little dark corners so if you've got suggestions please add them in the comments. Otherwise, the `README` has detailed setup instructions for the application if you want to play around with it.
+Additionally, all the examples and advice in this post are derived from the construction of a [sample application](https://github.com/johnbender/jqm-rails) that tracks the presence of employees in an office. It's obviously a simple application and complexity often shines a light in the little dark corners so if you've got suggestions please add them in the comments. Otherwise, the `README` has detailed setup instructions for the application if you want to play around with it.
 
 ## Setting Up
 
-The recommended includes for the `head` of your document looks something like:
+The recommended includes for the `head` of a non-Rails jQuery Mobile document looks something like:
 
 ```html
 <link rel="stylesheet" href="$CDN/jquery.mobile.css"/>
@@ -20,7 +18,7 @@ The recommended includes for the `head` of your document looks something like:
 <script src="$CDN/jquery.mobile.js"></script>
 ```
 
-Where `$CDN` is either your own content delivery network or `code.jquery.com/mobile/$VERSION/`. Rails, as of 3.1, uses the `jquery-rails` gem by default in a newly generated application's Gemfile and includes it via the asset pipeline. So your includes will actually take the form:
+Where `$CDN` is either your own content delivery network or `//code.jquery.com/mobile/$VERSION/`. Rails, as of 3.1, uses the `jquery-rails` gem by default in a newly generated application's Gemfile and includes it via the asset pipeline. So your includes will actually take the form:
 
 ```html
 <%= stylesheet_link_tag "application" %>
@@ -29,13 +27,13 @@ Where `$CDN` is either your own content delivery network or `code.jquery.com/mob
 <script src="$CDN/jquery.mobile.js"></script>
 ```
 
-since the jQuery JavaScript is rolled into the application include through the asset pipeline directive
+Since the jQuery JavaScript is rolled into the application include through the asset pipeline with the directive
 
 ```javascript
 //= require jquery
 ```
 
-At the time of this writing there is one issue with jQuery Mobile 1.1 and jQuery Core 1.7.2 and newly generated Rails `Gemfile` doesn't have a constraint on the jquery-rails gem version. So in your `Gemfile` it's a good idea to use `gem 'jquery-rails', '=2.0.1'`, which carries Core version 1.7.1 and is compatible with Mobile 1.1. After that the only thing left is to decide what you want to do with your viewport meta tag. The discussion about device scale and width is a long and complex one. The [quirksmode article](http://www.quirksmode.org/blog/archives/2010/04/a_pixel_is_not.html) is a good place to start, but the recommended `content` value for jQuery Mobile applications is:
+At the time of this writing there is one issue with jQuery Mobile 1.1 and jQuery Core 1.7.2 and a newly generated Rails `Gemfile` doesn't have a constraint on the jquery-rails gem version. So in your `Gemfile` it's a good idea to use `gem 'jquery-rails', '=2.0.1'`, which carries jQuery Core version 1.7.1 and is compatible with jQuery Mobile 1.1. After that the only thing left is to decide what you want to do with your viewport meta tag. The discussion about device scale and width is a long and complex one. The [quirksmode article](http://www.quirksmode.org/blog/archives/2010/04/a_pixel_is_not.html) is a good place to start, but the recommended tag for jQuery Mobile applications is:
 
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,7 +41,7 @@ At the time of this writing there is one issue with jQuery Mobile 1.1 and jQuery
 
 ## Layout
 
-Aside from including the right assets and viewport meta tag you must also consider how you want to render your jQuery Mobile pages. The first and least complicated involves simply rendering all your view content into a page in the top level application layout (`app/views/layout/application.html.erb`):
+Aside from including the right assets and viewport meta tag you must also consider how you want to render your jQuery Mobile pages. The first and least complicated involves simply rendering all your view content into a `data-role=page` div element in the top level application layout (`app/views/layout/application.html.erb`):
 
 ```html
 <body>
@@ -59,7 +57,7 @@ Aside from including the right assets and viewport meta tag you must also consid
 </body>
 ```
 
-Here the main content of a view will be rendered into the `yield` call and a `content_for` block can be used to push bits of content else where. A simplified version of the users index at `app/views/users/index.html.erb` view would look something like:
+Here the main content of a view will be rendered into the `yield` call and a `content_for` block can be used to push bits of content elsewhere. A simplified version of the users index at `app/views/users/index.html.erb` view would look something like:
 
 ```html
 <% content_for :heading do %>
@@ -73,7 +71,7 @@ Here the main content of a view will be rendered into the `yield` call and a `co
 </ul>
 ```
 
-As the complexity of your Rails application grows it's likely that the views will need to make more detailed alteration to their parent layouts that don't make sense as `content_for` yields. One approach is to create a jQuery Mobile page partial and use a render block (`app/views/shared/_page.html.erb`):
+This at least reduces the burden on the view itself leaving a large chunk of the work in keeping the pages consistent to the layout. As the complexity of your Rails application grows it's likely that the views will need to make more detailed alteration to their parent layouts that don't make sense as `content_for` yields. One approach is to create a jQuery Mobile page partial and use a render block (`app/views/shared/_page.html.erb`):
 
 ```html
 <div data-role="page">
@@ -118,7 +116,7 @@ jQuery Mobile's support for caching multiple pages in an html document can cause
 </div>
 ```
 
-Assuming the first page is the current active page and DOM caching is turned on, clicking on the `/bars` link will navigate to the page that already exists in the DOM from that url (the `data-url` is added by the framework to identify where content came from). As a consequence when clicking the `/bars` link on the `/bars` page it's effectively a no-op. This is important in rails because invalid form submissions render the `new` view consistently under the index path (`app/controllers/users_controller.rb`).
+Assuming the first page is the current active page and DOM caching is turned on, clicking one of the `/bars` links will navigate to the page that already exists in the DOM from that url (the `data-url` is added by the framework to identify where content came from). As a consequence when clicking the `/bars` link on the `/bars` page it's effectively a no-op. This is important in rails because invalid form submissions render the `new` view consistently under the index path (`app/controllers/users_controller.rb`).
 
 ```ruby
 def create
@@ -135,7 +133,7 @@ end
 
 On validation failure the content of `/users` is effectively identical to `/users/new` save for the possible addition of the error message markup. The problem is that the page content for `/users` also has a form that submits to `/users` as its action which is the aforementioned noop.
 
-The solution we normally recommend is to add `data-ajax=false` on the form so which will prevent the framework from hijacking the submit. Unfortunately that also means no animation/transition. One quick way to get around the problem and retain the nice transitions is to differentiate the action path with a url parameter (`app/helpers/application_helper.rb`).
+The solution we normally recommend is to add `data-ajax=false` on the form which will prevent the framework from hijacking the submit. Unfortunately that also means it won't pull the content and apply an animation/transition. One quick way to get around the problem and retain the nice transitions is to differentiate the action path with a url parameter with a helper (`app/helpers/application_helper.rb`).
 
 ```ruby
 # NOTE severely pushing the "clever" envelope here
@@ -146,7 +144,7 @@ def differentiate_path(path, *args)
 end
 ```
 
-As noted this is probably a bit too clever (pejorative form), but it handles differentiating parametrized or unparametrized rails path and url helpers by adding an attempt query parameter. In use as the `:url` hash parameter to the `form_for` and `form_tag` helpers
+As noted this is probably a bit too clever (pejorative form), but it handles differentiating parametrized or unparametrized rails path and url helpers by adding an attempt query parameter. In use as the `:url` hash parameter to the `form_for` and `form_tag` helpers it looks like:
 
 ```ruby
 # new form
@@ -156,11 +154,11 @@ As noted this is probably a bit too clever (pejorative form), but it handles dif
 :url => differentiate_path(:user_path, @user)
 ```
 
-For each new submission it will increment the parameter value and signal to jQuery Mobile that the path and the content are different. In addition you will want to annotate your form with `data-dom-cache=true` so that it preserves the previous form submission page contents for a sane back button experience. Otherwise jQuery Mobile will reap the previous form validation failure pages from the DOM and try to reload the requested url in the history stack. If that happens to be `/users?attempt=3` the content won't be the submission form but rather a list of the users or something else if that url requires validation. By preserving the pages the back button will simply let them traverse backwards through their submission failures.
+For each new submission it will increment the parameter value and signal to jQuery Mobile that the path and the content are different. In addition you will want to annotate your form page with `data-dom-cache=true` so that it preserves the previous form submission page contents for a sane back button experience (easier with the `_page` partial). Otherwise jQuery Mobile will reap the previous form validation failure pages from the DOM and try to reload the requested url in the history stack. If that happens to be `/users?attempt=3` the content won't be the submission form but rather a list of the users or something else if that url requires validation. By preserving the pages the back button will simply let them traverse backwards through their submission failures.
 
 ## Data Attributes
 
-jQuery Mobile makes heavy use of data attributes for annotating DOM elements and configuring how the library will operate. During beta we came to the consensus that data attribute use was becoming more and more common and decided that a namespacing option would have a lot of value. Rails also makes fairly heavy use of data attributes for its unobtrusive javascript helpers though it doesn't appear from a simple `grep data- jquery_ujs.js` that there are any conflicts. If that changes you can alter jQuery Mobiles data attribute namespace with a simple addition `app/assets/javascripts/application.html.erb`:
+jQuery Mobile makes heavy use of data attributes for annotating DOM elements and configuring how the library will operate. During beta we came to the consensus that data attribute use was becoming more and more common and decided that a namespacing option would have a lot of value. Rails also makes fairly heavy use of data attributes for its unobtrusive javascript helpers though it doesn't appear from a simple `grep data- jquery_ujs.js` that there are any conflicts. If that changes you can alter jQuery Mobiles data attribute namespace with a simple addition to `app/assets/javascripts/application.html.erb`:
 
 ```javascript
 //= require jquery
@@ -171,7 +169,7 @@ $( document ).on( "mobileinit", function() {
 });
 ```
 
-The `mobileinit` event fires before jQuery Mobile has enhanced the DOM and is generally where you configure with JavaScript. As a result it's important that the binding comes _after_ the inclusion of jQuery in the asset pipeline and before jQuery Mobile is included either in the pipeline or in the head of your document. With the above snippet in place the data attributes in our page partial would change to:
+The `mobileinit` event fires before jQuery Mobile has enhanced the DOM and is generally where you configure the framework with JavaScript. As a result it's important that the binding comes _after_ the inclusion of jQuery in the asset pipeline and before jQuery Mobile is included either in the pipeline or in the head of your document. With the above snippet in place the data attributes in our page partial would change to:
 
 ```html
 <div data-jqm-role="page">
@@ -189,7 +187,7 @@ If you are beginning a new application and you plan to use a couple libraries th
 
 ## Debugging
 
-Tooling for mobile web development is still evolving and though Weinre and Adobe Shadow present intersecting opportunities to debug CSS, markup, and JavaScript we still get server side errors. jQuery Mobile, being unaware of the environment in which it's working must report a server error in a user friendly fashion. As a result it swallows the Rails stack traces we've come to know and love and just displays an error alert. By binding the special `pageloadfailed` event we replace the DOM content with the stack trace when one occurs (`app/assets/javascripts/debug/pagefailed.js.erb`)
+Tooling for mobile web development is still evolving and though Weinre and Adobe Shadow present intersecting opportunities to debug CSS, markup, and JavaScript we still get server side errors. jQuery Mobile, being unaware of the environment in which it's working must report a server error in a user friendly fashion. As a result it swallows the Rails stack traces we've come to know and love and just displays an error alert. By binding the special `pageloadfailed` event we can replace the DOM content with the stack trace when one occurs (`app/assets/javascripts/debug/pagefailed.js.erb`)
 
 ```javascript
 function onLoadFailed( event, data ) {
@@ -201,8 +199,12 @@ function onLoadFailed( event, data ) {
 $( document ).on( "pageloadfailed", onLoadFailed);
 ```
 
-To make sure that it only loads in development we can wrap that in a `<%= if Rails.env.development? %>` block and the asset pipeline will render the `erb` without the snippet in production/test.
+To make sure that it only loads in development we can wrap that in a `<%= if Rails.env.development? %>` block and the asset pipeline will render the `erb` without the snippet in production/test <sup>!</sup>.
 
-## footnotes
+## A Fine Pair
 
-1. information about jquery-rails versions and jquery versions that work with jquery mobile
+With a little bit of extra work Rails and jQuery Mobile make an exceptionally productive team when it comes to building mobile web apps.
+
+### Footnotes
+
+1. Thanks to some helpful attendants of my RailsConf talk for informing me about using erb in the asset pipeline!
