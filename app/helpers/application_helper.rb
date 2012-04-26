@@ -1,7 +1,7 @@
 module ApplicationHelper
   # NOTE severly pushing the "clever" envelope here
   def differentiate_path(path, *args)
-    attempt = (request.parameters["attempt"] || 0) + 1
+    attempt = request.parameters["attempt"].to_i + 1
     args.unshift(path).push(:attempt => attempt)
     send(*args)
   end

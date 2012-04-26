@@ -3,10 +3,9 @@
 <head>
   <title>Jqm and Rails</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= stylesheet_link_tag "http://code.jquery.com/mobile/latest/jquery.mobile.min.css", :media => "all" %>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "debug/page-load-failed" if Rails.env.development? %>
+  <%= stylesheet_link_tag "http://code.jquery.com/mobile/latest/jquery.mobile.min.css", :media => "all" %>
   <%= javascript_include_tag "http://code.jquery.com/mobile/latest/jquery.mobile.min.js" %>
   <%= csrf_meta_tags %>
 </head>
@@ -39,10 +38,10 @@
       <%= yield %>
     </div>
 
-		<div data-role="navbar" data-position="fixed">
-			<ul>
+    <div data-role="navbar" data-position="fixed">
+      <ul>
         <% if current_user %>
-				<li>
+        <li>
           <a href="/users" data-icon="grid">users</a>
         </li>
         <li>
@@ -59,8 +58,8 @@
           <%= link_to "sign up", new_user_path, "data-icon" => "plus"%>
         </li>
         <% end %>
-			</ul>
-		</div>
+      </ul>
+    </div>
   </div>
 </body>
 </html>
