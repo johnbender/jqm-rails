@@ -1,6 +1,6 @@
 # Rails and jQuery Mobile
 
-The mobile web is huge and it's continuing to grow at an impressive rate. Internet browsing on mobile devices is doubling year over year as a percent of total web browsing according to some sources<sup>!!</sup>. Along with the massive growth of the mobile internet comes an impressive diversity of devices and browsers<sup>!!</sup>. It's not all WebKit, it's definitely not all iOS, and even when it is WebKit there are a vast array of implementation differences between browser APIs. As a result, making your applications cross platform and mobile ready is both important and difficult.
+The mobile web is huge and it's continuing to grow at an impressive rate. Internet browsing on mobile devices is doubling year over year as a percent of total web browsing according to some sources<sup>1</sup>. Along with the massive growth of the mobile internet comes an impressive diversity of devices and browsers<sup>2</sup>. It's not all WebKit, it's definitely not all iOS, and even when it is WebKit there are a vast array of implementation differences between browser APIs. As a result, making your applications cross platform and mobile ready is both important and difficult.
 
 jQuery Mobile provides a quick start toward a mobile friendly application with semantic markup and the familiarity of jQuery. Rails provides an easy to use application environment for serving that markup and managing the data that backs it. By and large they work together flawlessly to create an awesome mobile experience but there are a few integration points that bear highlighting.
 
@@ -199,7 +199,7 @@ function onLoadFailed( event, data ) {
 $( document ).on( "pageloadfailed", onLoadFailed);
 ```
 
-To make sure that it only loads in development we can wrap that in a `<%= if Rails.env.development? %>` block and the asset pipeline will render the `erb` without the snippet in production/test <sup>!</sup>.
+To make sure that it only loads in development we can wrap that in a `<%= if Rails.env.development? %>` block and the asset pipeline will render the `erb` without the snippet in production/test <sup>3</sup>.
 
 ## A Fine Pair
 
@@ -207,6 +207,8 @@ If you're interested in taking this a bit further jQuery defines its constituent
 
 ### Notes
 
-1. Thanks to some helpful attendants of my RailsConf talk for informing me about using erb in the asset pipeline!
-2. If you find errors please fork the [sample application repository](https://github.com/johnbender/jqm-rails/blob/master/doc/post.md), make the alteration to `doc/post.md` and submit a pull request.
-3. If you found the article worthwhile you can follow me on twitter [@johnbender](http://twitter.com/johnbender) or check out my personal blog at [johnbender.us](http://johnbender.us).
+1. StatCounter "Mobile vs Desktop": http://gs.statcounter.com/#mobile_vs_desktop-ww-monthly-201103-201203
+2. StatCounter "Top 9 Mobile Browsers": http://gs.statcounter.com/#mobile_browser-ww-monthly-201103-201203
+3. Thanks to some helpful attendants of my RailsConf talk for informing me about using erb in the asset pipeline! If that's you please contact me on [twitter](http://twitter.com/johnbender) or [github](https://github.com/johnbender).
+4. If you find errors please fork the [sample application repository](https://github.com/johnbender/jqm-rails/blob/master/doc/post.md), make the alteration to `doc/post.md` and submit a pull request.
+5. If you found the article worthwhile you can follow me on twitter [@johnbender](http://twitter.com/johnbender) or check out my personal blog at [johnbender.us](http://johnbender.us).
