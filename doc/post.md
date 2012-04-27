@@ -144,7 +144,7 @@ def differentiate_path(path, *args)
 end
 ```
 
-As noted this is probably a bit too clever (pejorative form), but it handles differentiating parametrized or unparametrized rails path and url helpers by adding an attempt query parameter. In use as the `:url` hash parameter to the `form_for` and `form_tag` helpers it looks like:
+As noted this is probably a bit too clever (pejorative form), but it handles differentiating parametrized or unparameterized rails path and url helpers by adding an attempt query parameter. In use as the `:url` hash parameter to the `form_for` and `form_tag` helpers it looks like:
 
 ```ruby
 # new form
@@ -203,8 +203,9 @@ To make sure that it only loads in development we can wrap that in a `<%= if Rai
 
 ## A Fine Pair
 
-With a little bit of extra work Rails and jQuery Mobile make an exceptionally productive team when it comes to building mobile web apps.
+If you're interested in taking this a bit further jQuery defines its constituent modules using AMD so integrating require.js into the asset pipeline and defining a meta module for just the parts you want would be interesting. Also it's worth examining [WURFL](http://wurfl.sourceforge.net/) integration through the [gem](http://rubydoc.info/gems/wurfl/1.3.6/frames) of the same name if you are creating a mobile version of an existing website and you want to redirect users properly. Otherwise, Rails and jQuery Mobile make an exceptionally productive team for building mobile web applications.
 
-### Footnotes
+### Notes
 
 1. Thanks to some helpful attendants of my RailsConf talk for informing me about using erb in the asset pipeline!
+2. If you find errors please fork the [sample application repository](https://github.com/johnbender/jqm-rails/blob/master/doc/post.md), make the alteration to `doc/post.md` and submit a pull request.
