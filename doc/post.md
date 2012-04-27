@@ -203,9 +203,10 @@ To make sure that it only loads in development we can wrap that in a `<%= if Rai
 
 ## A Fine Pair
 
-If you're interested in taking this a bit further jQuery defines its constituent modules using AMD so integrating require.js into the asset pipeline and defining a meta module for just the parts you want would be interesting. Also it's worth examining [WURFL](http://wurfl.sourceforge.net/) integration through the [gem](http://rubydoc.info/gems/wurfl/1.3.6/frames) of the same name if you are creating a mobile version of an existing website and you want to redirect users properly. Otherwise, Rails and jQuery Mobile make an exceptionally productive team for building mobile web applications.
+If you're interested in taking this a bit further jQuery defines its constituent modules using AMD so integrating require.js into the asset pipeline and defining a meta module for just the parts you want is one way to reduce the wire weight of the include. Also it's worth examining [WURFL](http://wurfl.sourceforge.net/) integration through the [gem](http://rubydoc.info/gems/wurfl/1.3.6/frames) of the same name if you are creating a mobile version of an existing website and you want to redirect users properly. Otherwise, Rails and jQuery Mobile make an exceptionally productive team for building mobile web applications.
 
 ### Notes
 
 1. Thanks to some helpful attendants of my RailsConf talk for informing me about using erb in the asset pipeline!
 2. If you find errors please fork the [sample application repository](https://github.com/johnbender/jqm-rails/blob/master/doc/post.md), make the alteration to `doc/post.md` and submit a pull request.
+3. If you found the article worthwhile you can follow me on twitter [@johnbender](http://twitter.com/johnbender) or check out my personal blog at [johnbender.us](http://johnbender.us).
