@@ -47,6 +47,21 @@ This may fail to install if the sqlite3 development headers aren't available to 
 
 Your application will be available at [http://localhost:3000/](http://localhost:3000)
 
+## Teardown
+
+### Vagrant
+
+The Vagrant environments are disposable.
+
+    cd jqm-rails
+    vagrant destroy
+
+Otherwise, if you follow the manual set of setup instructions you can remove the the project and gems in one fel swoop with
+
+    rm -Rf jqm-rails
+
+But any dependencies that you installe globally will have to be cleaned up manually.
+
 ## Notes
 
 The model and controllers for the user authentication are borrowed from the show notes/code samples of [Railscast 270](https://github.com/railscasts/episode-270/tree/master/auth-after) for the sake of time savings. Thanks Ryan!
