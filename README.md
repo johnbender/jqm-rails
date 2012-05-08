@@ -56,6 +56,8 @@ The Vagrant environments are disposable.
     cd jqm-rails
     vagrant destroy
 
+### Other
+
 Otherwise, if you follow the manual set of setup instructions you can remove the the project and gems in one fel swoop with
 
     rm -Rf jqm-rails
