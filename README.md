@@ -8,8 +8,9 @@ There are two ways to set up this application for development. The easiest is wi
 
 ### Vagrant
 
-Once Vagrant is installed using one of the downloaded packages open up your terminal and issue the following
+Once Vagrant is installed using one of the downloaded packages you'll need to add a base box to build from (300mb), cclone the repo, and tell vagrant to build your development environment.
 
+    vagrant box add base http://files.vagrantup.com/lucid32.box
     git clone git://github.com/johnbender/jqm-rails.git
     cd jqm-rails
     vagrant up
