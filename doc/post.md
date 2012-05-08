@@ -10,7 +10,7 @@ All the examples and advice in this post are derived from the construction of a 
 
 ## Setting Up
 
-The recommended includes for the `head` of a non-Rails jQuery Mobile document looks something like:
+All jQuery mobile applications expect a certain set of includes in a particular order. When integrating with Rails the [default recommendations](http://jquerymobile.com/demos/1.1.0/docs/pages/page-anatomy.html) made in the jQuery Mobile documentation require some slight alterations. The recommended configuration looks something like:
 
 ```html
 <link rel="stylesheet" href="$CDN/jquery.mobile.css"/>
@@ -41,7 +41,9 @@ At the time of this writing there is one issue with jQuery Mobile 1.1 and jQuery
 
 ## Layout
 
-Aside from including the right assets and viewport meta tag you must also consider how you want to render your jQuery Mobile pages. The first and least complicated involves simply rendering all your view content into a `data-role=page` div element in the top level application layout (`app/views/layout/application.html.erb`):
+When building your jQuery Mobile application the navigable views are constructed using `data-role=page` annotated `div` elements. Fortunately Rails provides a variety of ways to get your content and visual information into a that `div`, but you'll have to make a determination on which fits your use case best.
+
+The first and least complicated involves simply rendering all your view content into a `data-role=page` div element in the top level application layout (`app/views/layout/application.html.erb`):
 
 ```html
 <body>
