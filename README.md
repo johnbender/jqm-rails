@@ -62,7 +62,7 @@ Otherwise, if you follow the manual set of setup instructions you can remove the
 
     rm -Rf jqm-rails
 
-But any dependencies that you installe globally will have to be cleaned up manually.
+But any dependencies that you install globally (eg, sqlite3) will have to be cleaned up manually.
 
 ## Notes
 
