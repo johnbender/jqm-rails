@@ -43,6 +43,7 @@ Otherwise you'll need to install bundler and the bundled gems with:
 
 This may fail to install if the sqlite3 development headers aren't available to compile the native extensions of the gem or if a compatible compiler isn't installed. Assuming success you can start up the application with:
 
+    bundle exec rake db:migrate
     bundle exec rails server
 
 Your application will be available at [http://localhost:3000/](http://localhost:3000)
